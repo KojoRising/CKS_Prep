@@ -1,0 +1,13 @@
+kind: NetworkPolicy
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: back2db
+  namespace: default
+spec:
+  policyTypes: [Egress]
+  podSelector:
+    matchLabels: {id: backend}
+  egress:
+    - to:
+        - namespaceSelector:
+            matchLabels: {ns: cassandra}
