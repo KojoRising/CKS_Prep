@@ -1,0 +1,33 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: cluster-secretjobs-appset
+  namespace: argocd
+spec:
+  generators:
+    - git:
+        repoURL: https://github.com/argoproj/argo-cd.git
+        revision: HEAD
+        directories:
+          - path: /applicationset/examples/list-generator/guestbook/engineering-dev
+  template:
+    metadata:
+      name: 'cluster-secretjobs-{{path.basename}}-{{name}}'
+      labels:
+        kubernetes.cnp.io/app-type: cluster-secretjobs
+        kubernetes.cnp.io/environment: '{{metadata.labels.kubernetes.cnp.io/environment}}'
+        kubernetes.cnp.io/cluster.name: '{{path.basename}}'
+        kubernetes.cnp.io/cluster.region: '{{metadata.labels.kubernetes.cnp.io/cluster.region}}'
+        kubernetes.cnp.io/cluster.jurisdiction: '{{metadata.labels.kubernetes.cnp.io/cluster.jurisdiction}}'
+    spec:
+      project: default
+      source:
+        path: '{{path}}'
+        repoURL: https://github.com/argoproj/argo-cd.git
+        targetRevision: HEAD
+      destination:
+        namespace: argocd
+        server: '{{server}}'
+      syncPolicy:
+        automated:
+          prune: true
