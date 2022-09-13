@@ -1,0 +1,19 @@
+apiVersion: templates.gatekeeper.sh/v1beta1
+kind: ConstraintTemplate
+metadata:
+  name: appsetconstraint
+spec:
+  crd:
+    spec:
+      names:
+        kind: AppSetConstraint
+  targets:
+    - target: admission.k8s.gatekeeper.sh
+      rego: |
+        package appsetconstraint
+
+        violation[{"msg": msg}] {
+          namespace := input.review.object.metadata.namespace
+          not namespace = "argocd"
+          msg := "Not using argocd namespace!"
+        }

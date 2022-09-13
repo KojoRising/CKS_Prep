@@ -1,0 +1,10 @@
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: AppSetConstraint
+metadata:
+  name: denyappset
+spec:
+  match:
+    kinds:
+      - apiGroups: ["argoproj.io/v1alpha1"]
+        kinds: ["ApplicationSet"]
+
