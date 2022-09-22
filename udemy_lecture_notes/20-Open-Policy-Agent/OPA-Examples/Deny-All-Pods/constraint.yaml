@@ -1,0 +1,13 @@
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: K8sDenyAll
+metadata:
+  name: denyall
+spec:
+  enforcementAction: deny
+  match:
+    excludedNamespaces: ["gatekeeper-system", "argocd"]
+    kinds:
+      - apiGroups: [""]
+        kinds: ["Pod"]
+  parameters:
+    message: "WHY DID YOU TRY!!"

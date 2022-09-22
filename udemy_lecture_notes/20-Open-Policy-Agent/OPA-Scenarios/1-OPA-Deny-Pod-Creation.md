@@ -3,6 +3,8 @@
 curl https://raw.githubusercontent.com/KojoRising/CKA_Prep/main/abbreviated_alias.sh > alias.sh && source alias.sh
 ```
 
+### Create a Policy that denies all pod creation 
+
 #### 1) ConstraintTemplate
 ```yaml
 apiVersion: templates.gatekeeper.sh/v1beta1

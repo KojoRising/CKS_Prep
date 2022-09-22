@@ -12,11 +12,29 @@
 
 ## Linux Commands | By Chapter
 
-
-`mount` - For checking where serviceaccount is mounted intrapod
-`uname -r` - For checking kernel group (host vs container)
-`id` - For checking id/group running in a pod
 `crictl ps` - For checking if container/image is spun back up
 
-## 25 -Behavioral Analytics
+
+### Ch 13 Cluster Hardening - Service Accounts
+`mount` - For checking where serviceaccount is mounted intra-pod.
+- Usually /run/secrets/
+
+
+### Ch 17 Container Runtime Sandboxes
+`uname -r` - For checking kernel group (host vs container)
+- See if kernel group name is different
+`id` - For checking id/group running in a pod
+  
+### Ch. 18 OS-Level-Security-Domain
+- Check if container/pod is running privileged (direct mapping between container-root & host-root)
+  - `sysctl kernel.hostname=myfakehost` - See if command runs successfully. 
+- Check if container/pod is running with privilege escalation
+  - `cat /proc/1/status/ | grep "NoNewPrivs` - 1 = Yes, 0 = No
+
+
+### Ch 25 Behavioral Analytics
 `strace ls` - Intercepts & Logs syscalls
+
+
+
+

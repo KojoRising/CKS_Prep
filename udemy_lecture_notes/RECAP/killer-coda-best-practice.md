@@ -39,3 +39,13 @@ curl https://raw.githubusercontent.com/KojoRising/CKA_Prep/main/abbreviated_alia
 https://itnext.io/big-change-in-k8s-1-24-about-serviceaccounts-and-their-secrets-4b909a4af4e0
 - How can you create a secret that corresponds to the service account?
   - 
+
+```yaml
+apiVersion: v1
+kind: Secret
+type: kubernetes.io/service-account-token
+metadata:
+  name: policy
+  annotations:
+    kubernetes.io/service-account.name: "policy"
+```

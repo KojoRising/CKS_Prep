@@ -1,0 +1,25 @@
+apiVersion: templates.gatekeeper.sh/v1beta1
+kind: ConstraintTemplate
+metadata:
+  name: k8sdenyall
+spec:
+  crd:
+    spec:
+      names:
+        kind: K8sDenyAll
+      validation:
+        # Schema for the `parameters` field
+        openAPIV3Schema:
+          properties:
+            message:
+              type: string
+  targets:
+    - target: admission.k8s.gatekeeper.sh
+      rego: |
+        package k8sdenyall
+
+        violation[{"msg": msg}] {
+          message := input.parameters.message
+          1 > 0
+          msg := sprintf("POD-CREATION-DENIED: %v", [message])
+        }
