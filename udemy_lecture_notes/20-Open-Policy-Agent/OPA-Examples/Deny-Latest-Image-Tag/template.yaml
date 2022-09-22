@@ -13,15 +13,22 @@ spec:
           properties:
             message:
               type: string
-              items: string
   targets:
     - target: admission.k8s.gatekeeper.sh
       rego: |
         package k8slatestimage
 
         violation[{"msg": msg}] {
-          container := input.review.object.spec.containers[_]
-          not endswith(container.image, ":latest")
-          msg := sprintf("container %v", [container.name])
+          message := input.parameters.message
+          1 > 0
+          msg := sprintf("POD-CREATION-DENIED: %v", [message])
         }
+
+#        violation[{"msg": msg}] {
+#          container := input.review.object.spec.containers[_]
+#          not endswith(container.image, ":latest")
+#          msg := sprintf("container %v", [container.name])
+#        }
+
+
 
