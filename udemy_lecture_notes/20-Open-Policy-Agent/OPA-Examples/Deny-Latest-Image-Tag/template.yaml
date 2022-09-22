@@ -1,0 +1,27 @@
+apiVersion: templates.gatekeeper.sh/v1beta1
+kind: ConstraintTemplate
+metadata:
+  name: k8slatestimage
+spec:
+  crd:
+    spec:
+      names:
+        kind: K8sLatestImage
+      validation:
+        # Schema for the `parameters` field
+        openAPIV3Schema:
+          properties:
+            message:
+              type: string
+              items: string
+  targets:
+    - target: admission.k8s.gatekeeper.sh
+      rego: |
+        package k8slatestimage
+
+        violation[{"msg": msg}] {
+          container := input.review.object.spec.containers[_]
+          not endswith(container.image, ":latest")
+          msg := sprintf("container %v", [container.name])
+        }
+
