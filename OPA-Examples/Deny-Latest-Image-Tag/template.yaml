@@ -19,16 +19,10 @@ spec:
         package k8slatestimage
 
         violation[{"msg": msg}] {
-          message := input.parameters.message
-          1 > 0
-          msg := sprintf("POD-CREATION-DENIED: %v", [message])
+          container := input.review.object.spec.containers[_]
+          not startswith(container.image, "repo.example.com/")
+          msg := sprintf("Image %v for container %v does not come from repo.example.org/", [container.image, container.name])
         }
-
-#        violation[{"msg": msg}] {
-#          container := input.review.object.spec.containers[_]
-#          not endswith(container.image, ":latest")
-#          msg := sprintf("container %v", [container.name])
-#        }
 
 
 

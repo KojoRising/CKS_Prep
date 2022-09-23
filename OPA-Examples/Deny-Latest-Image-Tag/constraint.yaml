@@ -1,13 +1,12 @@
 apiVersion: constraints.gatekeeper.sh/v1beta1
 kind: K8sLatestImage
 metadata:
-  name: pods-k8slatestimage
+  name: k8slatestimage
 spec:
   enforcementAction: deny
   match:
-    excludedNamespaces: [ "gatekeeper-system", "argocd" ]
     kinds:
       - apiGroups: [""]
         kinds: ["Pods"]
   parameters:
-    message: "hr"
+    message: "WHY DID YOU TRY!!"
