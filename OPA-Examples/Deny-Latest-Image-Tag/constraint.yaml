@@ -5,8 +5,9 @@ metadata:
 spec:
   enforcementAction: deny
   match:
+    excludedNamespaces: ["gatekeeper-system", "argocd"]
     kinds:
       - apiGroups: [""]
-        kinds: ["Pods"]
+        kinds: ["Pod"]
   parameters:
     message: "WHY DID YOU TRY!!"

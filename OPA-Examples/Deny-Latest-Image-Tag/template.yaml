@@ -20,9 +20,12 @@ spec:
 
         violation[{"msg": msg}] {
           container := input.review.object.spec.containers[_]
-          not startswith(container.image, "repo.example.com/")
-          msg := sprintf("Image %v for container %v does not come from repo.example.org/", [container.image, container.name])
+          not startswith(container.image, "docker.io")
+          msg := sprintf("Image %v for container %v comes from disallowed registry, must be docker.io/", [container.image, container.name])
         }
 
-
-
+        violation[{"msg": msg}] {
+          container := input.review.object.spec.containers[_]
+          endswith(container.image, ":latest")
+          msg := sprintf("Image %v for container %v has disallowed latest tag", [container.image, container.name])
+        }

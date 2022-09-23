@@ -3,3 +3,9 @@ kind: Kustomization
 resources:
 - constraint.yaml
 - template.yaml
+
+
+#  controlplane $ k run nginx --image=nginx:latest --dry-run=server
+#  Error from server ([k8slatestimage] Image nginx:latest for container nginx comes from disallowed registry, must be docker.io/
+#  [k8slatestimage] Image nginx:latest for container nginx has disallowed latest tag): admission webhook "validation.gatekeeper.sh" denied the request: [k8slatestimage] Image nginx:latest for container nginx comes from disallowed registry, must be docker.io/
+#  [k8slatestimage] Image nginx:latest for container nginx has disallowed latest tag
