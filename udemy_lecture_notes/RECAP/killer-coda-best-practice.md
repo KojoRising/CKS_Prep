@@ -9,12 +9,19 @@
 curl https://raw.githubusercontent.com/KojoRising/CKA_Prep/main/abbreviated_alias.sh > alias.sh && source alias.sh
 
 ## Hardest Practice Problems
+
+
+#### 5 | Containers Under the Hood | Docker Container Namespaces
+1) https://killercoda.com/killer-shell-cks/scenario/container-namespaces-docker
+
+#### 6 | Network Policies
+1) https://killercoda.com/killer-shell-cks/scenario/networkpolicy-create-default-deny
+2) 
+
 #### 14 | Cluster-Hardening | Restrict API-Server Access
 1) https://killercoda.com/killer-shell-cks/scenario/apiserver-misconfigured
 2) https://killercoda.com/killer-shell-cks/scenario/apiserver-node-restriction
 3) https://killercoda.com/killer-shell-cks/scenario/networkpolicy-create-default-deny
-
-
 
 
 ## Tough Questions

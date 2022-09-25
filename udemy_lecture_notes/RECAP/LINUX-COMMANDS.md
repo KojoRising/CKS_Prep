@@ -1,16 +1,22 @@
-## Linux Directories | By Chapter
+## 1 Linux Directories | By Chapter
 
 1) `/proc` - Info on per/process
 #### How can you check if a pod is running with privilegeEscalation?
 - `cat /proc/1/status | grep "NoNewPrivs"`. 1 means privilegeEscalation, 0 means not. 
 
+2) `/etc`
+  - `/etc/apparmor.d` - AppArmor Profiles
+  - `/etc/falco/falco_rules.yaml`
+  - `/etc/falco/falco_rules.local.yaml`
+
 #### What are some important files in the `/proc/PID` directory?
 - environ - Has all environment variables (say for a pod)
 - fd - File Descriptor
 
-2)
+### Ch 29
+- `/etc/passwd` - Where all users are stored
 
-## Linux Commands | By Chapter
+## 2 Linux Commands | By Chapter
 
 `crictl ps` - For checking if container/image is spun back up
 
@@ -35,6 +41,23 @@
 ### Ch 25 Behavioral Analytics
 `strace ls` - Intercepts & Logs syscalls
 
+### Ch 28 Kernel Hardening Tools
+- apt install apparmor-utils
+- aa-status
+- aa-logprof
+- aa-genprof
+- aa-complain
+- aa-enforce
+- apparmor-parser
+- docker run --security-opt apparmor=docker-nginx nginx
+- a) Get containerID - `crictl ps | grep IMAGE`
+- b) `crictl inspect CONT_ID | grep apparmor`
 
-
-
+### Ch 29 Reduce Attack Surface
+- Check Ports
+  - `netstat -plnt | grep PORT`
+  - `lsof -i :PORT`
+- `whoami` - Check current user
+- `su USER` - Switch to User
+- `sudo -i` - Return to root from current user
+- `adduser USER` - Add User
