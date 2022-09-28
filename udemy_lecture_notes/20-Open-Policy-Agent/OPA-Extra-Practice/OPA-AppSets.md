@@ -25,9 +25,8 @@ spec:
         # Schema for the `parameters` field
         openAPIV3Schema:
           properties:
-            labels:
-              type: array
-              items: string
+            message:
+              type: string
   targets:
     - target: admission.k8s.gatekeeper.sh
       rego: |
@@ -53,7 +52,7 @@ spec:
       - apiGroups: ["argoproj.io/v1alpha1"]
         kinds: ["ApplicationSet"]
   parameters:
-    labels: ["finance"]
+    message: "finance"
 ```
 
 #### 4) MATRIX GENERATOR
