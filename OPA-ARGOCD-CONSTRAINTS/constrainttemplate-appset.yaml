@@ -15,7 +15,7 @@ spec:
         violation[{"msg": msg}] {
           name := input.review.object.metadata.name
           endswith(name, "-appset")
-          msg := sprintf("Name should end with '-appset'. <%v>, [name])
+          msg := sprintf("Name should end with '-appset'. Name: <%v>", [name])
         }
 
         violation[{"msg": msg}] {
