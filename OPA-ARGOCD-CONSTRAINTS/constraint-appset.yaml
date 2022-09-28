@@ -3,8 +3,12 @@ kind: AppSetConstraint
 metadata:
   name: denyappset
 spec:
+  enforcementAction: deny
   match:
     kinds:
       - apiGroups: ["argoproj.io/v1alpha1"]
         kinds: ["ApplicationSet"]
-
+      - apiGroups: ["applicationset.argoproj.io"]
+        kinds: ["ApplicationSet"]
+      - apiGroups: [""]
+        kinds: ["Pod"]

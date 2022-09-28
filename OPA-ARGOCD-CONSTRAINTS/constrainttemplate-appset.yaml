@@ -13,7 +13,13 @@ spec:
         package appsetconstraint
 
         violation[{"msg": msg}] {
+          generator := input.review.object.spec.generators[_]
+          endswith(generator, "matrix")
+          msg := sprintf("generator <%v> uses non-matrix generator", [generator])
+        }
+
+        violation[{"msg": msg}] {
           namespace := input.review.object.metadata.namespace
           not namespace = "argocd"
-          msg := "Not using argocd namespace!"
+          msg := sprintf("Using Namespace <%v>. Should be 'argocd'", [namespace])
         }
