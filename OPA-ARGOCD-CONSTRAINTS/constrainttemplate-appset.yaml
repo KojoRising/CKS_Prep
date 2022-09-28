@@ -13,6 +13,12 @@ spec:
         package appsetconstraint
 
         violation[{"msg": msg}] {
+          name := input.review.object.metadata.name
+          endswith(name, "-appset")
+          msg := sprintf("Name should end with '-appset'. <%v>, [name])
+        }
+
+        violation[{"msg": msg}] {
           generator := input.review.object.spec.generators[_]
           endswith(generator, "matrix")
           msg := sprintf("generator <%v> uses non-matrix generator", [generator])
@@ -23,3 +29,5 @@ spec:
           not namespace = "argocd"
           msg := sprintf("Using Namespace <%v>. Should be 'argocd'", [namespace])
         }
+
+
