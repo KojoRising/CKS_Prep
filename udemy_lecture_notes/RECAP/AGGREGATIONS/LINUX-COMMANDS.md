@@ -1,5 +1,8 @@
 ## 1 Linux Directories | By Chapter
 
+curl https://raw.githubusercontent.com/KojoRising/CKA_Prep/main/abbreviated_alias.sh > alias.sh && source alias.sh
+
+
 1) `/proc` - Info on per/process
 #### How can you check if a pod is running with privilegeEscalation?
 - `cat /proc/1/status | grep "NoNewPrivs"`. 1 means privilegeEscalation, 0 means not. 
@@ -61,3 +64,4 @@
 - `su USER` - Switch to User
 - `sudo -i` - Return to root from current user
 - `adduser USER` - Add User
+

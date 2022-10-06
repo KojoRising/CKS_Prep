@@ -11,5 +11,3 @@
 ### crictl ps | grep [NAME]
 1) API-Server Restart
 
-
-

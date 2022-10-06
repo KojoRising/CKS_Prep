@@ -27,6 +27,26 @@ controlplane $ cat /var/log/containers/kube-apiserver-controlplane_kube-system_k
 3) https://killercoda.com/killer-shell-cks/scenario/networkpolicy-create-default-deny
 
 
+#### 16 - MicroService-Vulnerabilities-EtcD
+- https://killercoda.com/killer-shell-cks/scenario/secret-etcd-encryption
+- https://killercoda.com/killer-shell-cks/scenario/sandbox-gvisor
+- https://killercoda.com/killer-shell-cks/scenario/privileged-containers
+- https://killercoda.com/killer-shell-cks/scenario/privilege-escalation-containers
+
+
+
+#### 24 SupplyChainSecurity | SecureSupplyChain
+- https://killercoda.com/killer-shell-cks/scenario/image-policy-webhook-setup
+- 
+
+#### 25 RuntimeSecurity | Behavorial Analytics
+- https://killercoda.com/killer-shell-cks/scenario/syscall-activity-strace
+- https://killercoda.com/killer-shell-cks/scenario/falco-change-rule
+
+## 26 RuntimeSecurity | Container Immutability
+- https://killercoda.com/killer-shell-cks/scenario/immutability-readonly-fs
+
+
 ## Tough Questions
 1) Container Sandboxes
   - RuntimeClasses
