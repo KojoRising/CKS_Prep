@@ -1,0 +1,12 @@
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: Policy
+metadata:
+  name: policy
+spec:
+  enforcementAction: deny
+  match:
+    kinds:
+      - apiGroups: [ "argoproj.io" ]
+        kinds: [ "ApplicationSet", "appset","appsets","ApplicationSets", "applicationsets" ]
+      - apiGroups: [""]
+        kinds: ["Pod"]

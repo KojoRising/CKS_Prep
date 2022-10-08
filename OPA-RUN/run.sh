@@ -14,9 +14,6 @@ init_setup() {
 }
 
 createMatrixAppset() {
-  rm -rf matrix-appset.yaml
-  rm -rf git-appset.yaml
-  git clone git@github.com:KojoRising/CKS_Prep.git
   cp -r CKS_Prep/OPA-RUN/. .
 }
 
@@ -35,8 +32,8 @@ initAllSteps() {
   init_setup
   install_opa
   install_argo
-  init_policy_directory
-  createMatrixAppset
+#  git clone git@github.com:KojoRising/CKS_Prep.git
+#  createMatrixAppset
   docker pull openpolicyagent/conftest
   docker pull ghcr.io/plexsystems/konstraint
 }

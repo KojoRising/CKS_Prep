@@ -19,9 +19,10 @@ spec:
         }
 
         violation[{"msg": msg}] {
+          name := input.review.object.metadata.name
           generator := input.review.object.spec.generators[_]
-          endswith(generator, "matrix")
-          msg := sprintf("generator <%v> uses non-matrix generator", [generator])
+          not generator.matrix
+          msg := sprintf("generator <%v> uses non-matrix generator", [name])
         }
 
         violation[{"msg": msg}] {

@@ -6,7 +6,5 @@ spec:
   enforcementAction: deny
   match:
     kinds:
-      - apiGroups: ["argoproj.io/v1alpha1"]
-        kinds: ["ApplicationSet", "appset","appsets","ApplicationSets"]
-      - apiGroups: ["applicationset.argoproj.io"]
-        kinds: ["ApplicationSet"]
+      - apiGroups: ["argoproj.io"]
+        kinds: ["ApplicationSet", "appset","appsets","ApplicationSets", "applicationsets"]

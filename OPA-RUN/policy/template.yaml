@@ -1,0 +1,41 @@
+apiVersion: templates.gatekeeper.sh/v1beta1
+kind: ConstraintTemplate
+metadata:
+  creationTimestamp: null
+  name: policy
+spec:
+  crd:
+    spec:
+      names:
+        kind: Policy
+  targets:
+  - rego: |-
+      package main
+
+      violation[{"msg": msg}] {
+        input.kind = "ApplicationSet"
+        generator := input.spec.generators[_]
+        not generator.matrix
+        msg = "AppSets must have Matrix Generator as 1st Generator"
+      }
+
+      violation[{"msg": msg}] {
+        input.kind = "ApplicationSet"
+        generator := input.spec.generators[_]
+        matrixnestedgenerator := generator.matrix.generators[_]
+        not matrixnestedgenerator.clusters
+        msg = "AppSets w/ Matrix Generator should have nested Clusters-Generator"
+      }
+
+      violation[{"msg": msg}] {
+        namespace := input.review.object.metadata.namespace
+        not namespace = "argocd"
+        msg := sprintf("Using Namespace <%v>. Should be 'argocd'", [namespace])
+      }
+
+      violation[{"msg": msg}] {
+        not endswith(input.metadata.name, "-appset")
+        msg = sprintf("Name should end with '-appset'. Name: <%v>", [input.metadata.name])
+      }
+    target: admission.k8s.gatekeeper.sh
+status: {}
