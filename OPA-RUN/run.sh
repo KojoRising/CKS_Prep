@@ -13,42 +13,32 @@ init_setup() {
   curl https://raw.githubusercontent.com/KojoRising/CKA_Prep/main/abbreviated_alias.sh > alias.sh && source alias.sh
 }
 
-init_policy_directory() {
-  rm -rf ./policy
-  mkdir policy
-  cat <<EOF > policy/appset-policy.rego
-# from https://www.conftest.dev
-package main
-
-deny[msg] {
-  input.kind = "ApplicationSet"
-  generator := input.spec.generators[_]
-  not generator.matrix
-  msg = "AppSets must have Matrix Generator as 1st Generator"
-}
-
-deny[msg] {
-  input.kind = "ApplicationSet"
-  generator := input.spec.generators[_]
-  matrixnestedgenerator := generator.matrix.generators[_]
-  print(matrixnestedgenerator.clusters)
-  not matrixnestedgenerator.clusters
-  msg = "AppSets w/ Matrix Generator should have nested Clusters-Generator"
-}
-
-deny[msg] {
-  input.kind = "ApplicationSet"
-  not input.metadata.namespace = "argocd"
-  msg = "AppSets must have ArgoCD as Namespace"
-}
-EOF
-}
-
 createMatrixAppset() {
   rm -rf matrix-appset.yaml
   rm -rf git-appset.yaml
   git clone git@github.com:KojoRising/CKS_Prep.git
-  cp CKS_Prep/OPA-RUN/ .
+  cp -r CKS_Prep/OPA-RUN/. .
+}
+
+testAppsets() {
+  for file in ArgoCD-Sample-Appsets/; do
+    docker run --rm -v $(pwd):/project openpolicyagent/conftest test $file
+  done
+#  docker run --rm -v $(pwd):/project openpolicyagent/conftest test ArgoCD-Sample-Appsets/git-appset.yaml
+}
+
+useKonstraint() {
+  docker run -v $PWD:/konstraint ghcr.io/plexsystems/konstraint create /konstraint/policy
+}
+
+initAllSteps() {
+  init_setup
+  install_opa
+  install_argo
+  init_policy_directory
+  createMatrixAppset
+  docker pull openpolicyagent/conftest
+  docker pull ghcr.io/plexsystems/konstraint
 }
 
 #createGitAppset() {
@@ -90,8 +80,7 @@ createMatrixAppset() {
 #  EOF
 #}
 
-init_setup
-install_opa
-install_argo
-init_policy_directory
-createMatrixAppset
+case "$1" in
+  "") initAllSteps; exit;;
+  *) "$@"; exit;;
+esac
