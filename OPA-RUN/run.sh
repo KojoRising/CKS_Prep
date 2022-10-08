@@ -6,7 +6,7 @@ install_argo() {
 }
 
 install_opa() {
-  kubectl create -f https://raw.githubusercontent.com/killer-sh/cks-course-environment/master/course-content/opa/gatekeeper.yaml
+  kubectl apply -f https://raw.githubusercontent.com/open-policy-agent/gatekeeper/master/deploy/gatekeeper.yaml
 }
 
 init_setup() {
@@ -48,8 +48,7 @@ createMatrixAppset() {
   rm -rf matrix-appset.yaml
   rm -rf git-appset.yaml
   git clone git@github.com:KojoRising/CKS_Prep.git
-  cat CKS_Prep/TEMP-APPSETS/matrix-appset.yaml > ./matrix-appset.yaml
-  cat CKS_Prep/TEMP-APPSETS/git-appset.yaml > ./git-appset.yaml
+  cp CKS_Prep/OPA-RUN/ .
 }
 
 #createGitAppset() {

@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: container-host-hacker
+  name: container-host-hacker
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: container-host-hacker
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: container-host-hacker
+    spec:
+      volumes:
+        - name: host-vol
+          hostPath:
+            path: /run/containerd
+      containers:
+        - image: nginx
+          name: nginx
+          resources: {}
+          volumeMounts:
+            - mountPath: /tmp
+              name: host-vol
+status: {}

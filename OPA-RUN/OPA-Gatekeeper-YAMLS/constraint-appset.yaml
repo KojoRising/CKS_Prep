@@ -7,6 +7,6 @@ spec:
   match:
     kinds:
       - apiGroups: ["argoproj.io/v1alpha1"]
-        kinds: ["ApplicationSet"]
+        kinds: ["ApplicationSet", "appset","appsets","ApplicationSets"]
       - apiGroups: ["applicationset.argoproj.io"]
         kinds: ["ApplicationSet"]

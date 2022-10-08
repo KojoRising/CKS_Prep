@@ -3,27 +3,98 @@
 curl https://raw.githubusercontent.com/KojoRising/CKA_Prep/main/abbreviated_alias.sh > alias.sh && source alias.sh
 ```
 
-#### 1)
+#### 1) Task weight: 1%
+You have access to multiple clusters from your main terminal through kubectl contexts. Write all context names into /opt/course/1/contexts, one per line.
+From the kubeconfig extract the certificate of user restricted@infra-prod and write it decoded to /opt/course/1/cert.
 ```yaml
 
 ```
 
-#### 2) 
+#### 2) Task weight: 4%
+Use context: kubectl config use-context workload-prod
+Falco is installed with default configuration on node cluster1-worker1. Connect using ssh cluster1-worker1. Use it to:
+Find a Pod running image nginx which creates unwanted package management processes inside its container.
+Find a Pod running image httpd which modifies /etc/passwd.
+Save the Falco logs for case 1 under /opt/course/2/falco.log in format:
+```yaml
+time-with-nanosconds,container-id,container-name,user-name
+```
+No other information should be in any line. Collect the logs for at least 30 seconds.
+Afterwards remove the threads (both 1 and 2) by scaling the replicas of the Deployments that control the offending Pods down to 0.
 ```yaml
 
 ```
 
-#### 3)
+#### 3) Task weight: 3%
+Use context: kubectl config use-context workload-prod
+You received a list from the DevSecOps team which performed a security investigation of the k8s cluster1 (workload-prod). The list states the following about the apiserver setup:
+- Accessible through a NodePort Service
+Change the apiserver setup so that:
+- Only accessible through a ClusterIP Service
 ```yaml
 
 ```
 
-#### 4)
-```yaml
+#### 4) Task weight: 8%
+Use context: kubectl config use-context workload-prod
 
+There is Deployment container-host-hacker in Namespace team-red which mounts /run/containerd as a hostPath volume on the Node where its running. This means that the Pod can access various data about other containers running on the same Node.
+
+You're asked to forbid this behavior by:
+- Enabling Admission Plugin PodSecurityPolicy in the apiserver
+- Creating a PodSecurityPolicy named psp-mount which allows hostPath volumes only for directory /tmp
+- Creating a ClusterRole named psp-mount which allows to use the new PSP
+- Creating a RoleBinding named psp-mount in Namespace team-red which binds the new ClusterRole to all ServiceAccounts in the Namespace team-red
+
+Restart the Pod of Deployment container-host-hacker afterwards to verify new creation is prevented.
+NOTE: PSPs can affect the whole cluster. Should you encounter issues you can always disable the Admission Plugin again.
+```yaml
+apiVersion: policy/v1beta1
+kind: PodSecurityPolicy
+metadata:
+  name: psp-mount
+spec:
+  allowedHostPaths:
+    - pathPrefix: /tmp
+      readOnly: false
+  # The rest fills in some required fields.
+  seLinux:
+    rule: RunAsAny
+  supplementalGroups:
+    rule: RunAsAny
+  runAsUser:
+    rule: RunAsAny
+  fsGroup:
+    rule: RunAsAny
+  volumes:
+  - 'hostPath'
+  
+controlplane $ kc rolebinding psp-mount --clusterrole=psp-mount --group=system:serviceaccount $d
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  creationTimestamp: null
+  name: psp-mount
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: psp-mount
+subjects:
+  - apiGroup: rbac.authorization.k8s.io
+    kind: Group
+    name: system:serviceaccount
 ```
 
-#### 5)
+#### 5) Task weight: 3%
+Use context: kubectl config use-context infra-prod
+You're ask to evaluate specific settings of cluster2 against the CIS Benchmark recommendations. Use the tool kube-bench which is already installed on the nodes.
+Connect using ssh cluster2-master1 and ssh cluster2-worker1.
+On the master node ensure (correct if necessary) that the CIS recommendations are set for:
+The --profiling argument of the kube-controller-manager
+The ownership of directory /var/lib/etcd
+On the worker node ensure (correct if necessary) that the CIS recommendations are set for:
+The permissions of the kubelet configuration /var/lib/kubelet/config.yaml
+The --client-ca-file argument of the kubelet
 ```yaml
 
 ```
