@@ -19,16 +19,27 @@ spec:
         }
 
         violation[{"msg": msg}] {
-          name := input.review.object.metadata.name
-          generator := input.review.object.spec.generators[_]
-          not generator.matrix
-          msg := sprintf("generator <%v> uses non-matrix generator", [name])
-        }
-
-        violation[{"msg": msg}] {
           namespace := input.review.object.metadata.namespace
           not namespace = "argocd"
           msg := sprintf("Using Namespace <%v>. Should be 'argocd'", [namespace])
         }
 
+        violation[{"msg": msg}] {
+          msg := sprintf("REVIEW OBJECT: %v", [input.review.object.spec.generators[_].git])
+        }
+
+        violation[{"msg": msg}] {
+          name := input.review.object.metadata.name
+          generator := input.review.object.spec.generators[_]
+          not generator.matrix
+          msg := sprintf("Appset <%v> uses non-matrix generator", [name])
+        }
+
+        violation[{"msg": msg}] {
+          name := input.review.object.metadata.name
+          generator := input.review.object.spec.generators[_]
+          clusterGen := generator.matrix.generators[_].clusters
+          p { generator.matrix.generators[0].clusters; generator.matrix.generators[1].clusters }
+          msg := sprintf("Appset <%v> w/ Matrix Generator should have nested Clusters-Generator", [clusterGen])
+        }
 

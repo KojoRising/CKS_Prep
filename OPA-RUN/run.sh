@@ -32,7 +32,7 @@ initAllSteps() {
   init_setup
   install_opa
   install_argo
-#  git clone git@github.com:KojoRising/CKS_Prep.git
+  git clone git@github.com:KojoRising/CKS_Prep.git
 #  createMatrixAppset
   docker pull openpolicyagent/conftest
   docker pull ghcr.io/plexsystems/konstraint

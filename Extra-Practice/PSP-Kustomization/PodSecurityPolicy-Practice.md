@@ -62,7 +62,6 @@ spec:
   allowedHostPaths:
   - pathPrefix: /tmp
     readOnly: false
-  privileged: false  # Don't allow privileged pods!
   # The rest fills in some required fields.
   seLinux:
     rule: RunAsAny
@@ -181,29 +180,3 @@ LAST SEEN   TYPE      REASON                    OBJECT                          
 35s         Warning   FailedCreate              replicaset/new-deploy-64d7658d74            Error creating: pods "new-deploy-64d7658d74-" is forbidden: PodSecurityPolicy: unable to admit pod: [spec.volumes[0].hostPath.pathPrefix: Invalid value: "/run/containerd": is not allowed to be used]
 76s         Normal    ScalingReplicaSet         deployment/new-deploy                       Scaled up replica set new-deploy-64d7658d74 to 1
 ```
-
-#### 6)
-```yaml
-
-```
-
-#### 7)
-```yaml
-
-```
-
-#### 8)
-```yaml
-
-```
-
-#### 9)
-```yaml
-
-```
-
-#### 10)
-```yaml
-
-```
-
